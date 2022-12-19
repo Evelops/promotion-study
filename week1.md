@@ -43,3 +43,81 @@
     결과: 10
     
     - 만약 var이 아닌 const나 let의 경우는 에러 발생
+
+
+// 1. string concatenation
+    console.log(`my` + ` cat`);
+    console.log('1'  + 2);
+    console.log(`string literals
+    ..
+
+    1 + 2 = ${1+2}`);
+
+
+// 2.numeric operators
+console.log(1+1);
+console.log(1-1);
+console.log(1/1);
+console.log(1*1);
+console.log(5%2);
+console.log(2 ** 3);
+
+// 3. = operators
+let x =3;
+let y = 6;
+x += y; //  x = x + y
+x -= y; // x = x - y
+x *= y; // x = x * y
+x /= y; // x = x / y
+
+
+
+// 4. comparison operators
+console.log(10 < 6);
+console.log(10 <= 6);
+console.log(10 > 6);
+console.log(10 >= 6);
+
+// 5. logical operators
+// ||(or), &&(and) !(not)
+// ||는 앞에서 true가 나오면 다음은 진행하지 않는다.
+// &&는 앞에서 false가 나오면 다음은 진행하지 않는다.
+
+console.log("\n\n");
+// 6.equality
+const stringFive = "5";
+const numberFive = 5;
+
+// 타입을 고려하지 않음
+console.log(stringFive == numberFive);
+console.log(stringFive != numberFive);
+
+// 타입을 고려하여 확인
+console.log(stringFive === numberFive);
+console.log(stringFive !== numberFive);
+
+console.log("\n\n");
+
+const ellie1 = { name: "ellie"};
+const ellie2 = { name: "ellie"};
+const ellie3 = ellie1;
+
+console.log(ellie1 == ellie2);
+console.log(ellie1 === ellie2);
+console.log(ellie1 === ellie3);
+
+
+console.log("\n\n");
+const name = 'ellie'
+
+// 7. ? operator
+console.log(name === 'ellie' ? 'yes' : 'no');
+
+
+
+
+
+
+
+
+
