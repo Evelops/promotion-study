@@ -168,3 +168,30 @@ console.log(`name: ${nPerson.name}, age: ${nPerson.age}, age: ${nPerson.age}, pl
      }
      ```
 
+     <br>
+
+> 객체 참조 
+
+ ```js
+// 기존의 let 원시타입은 다음과 같이 값 그대로 저장 및 할당 & 복사.
+let name = "ESY";
+let newName = name;
+
+// name: ESY, newName : ESY
+console(`name: ${name}, newName: ${newName}`); 
+
+/**
+ * 객체는 원시타입과 다르게 참조에 의해 저장되고 복사된다.
+ * 변수에 객체가 그대로 저장되지 않고, 객체가 저장되어 있는 메모리 주소에 대한 참조값이 저장된다.
+ * */  
+let user = {name:"ESY"};
+
+let newUser = user; 
+
+// newUser의 값이 객체 참조에 의해서 변경됨.
+newUser.name='jjs';
+//newUserName: jjs
+console.log(`newUserName: ${newUser.name}`);
+
+ ```
+
