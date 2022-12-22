@@ -435,6 +435,221 @@ const simplePrint = () => console.log("simple");
 
 
 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/*
+express 선언 순서
+1. 서버 선언
+const app = express();
+
+2. 서버 셋팅
+app.set('port', process.env.PORT || 3000);
+
+3. 공통 미들웨어
+
+4. 라우터
+- 라우터는 범위가 넓은 라우터일 수록
+  하단에 선언한다.
+
+5. 에러 미들웨어
+
+6. listen
+
+*/
+
+const express = require('express');
+const app = express(); // 서버 선언
+const path = require('path');
+
+
+
+//port라는 속성을 3000으로 정의
+app.set('port', process.env.PORT || 3000); // 서버에 속성 선언
+
+
+
+/*
+    1. 미들웨어
+    use()가 미들웨어가 아니라
+    use()안에있는 이 부분이 미들웨어이다.
+    (req, res, next) => { }
+
+    이건 use()에 미들웨어를 장착한 것이다.
+    app.use((req, res, next) => { })
+
+    get(), post() 등의 라우터나
+    listen()에 있는 것도 미들웨어이다.
+
+    ex) 
+    app.use((req, res, next) => {
+        console.log("미들웨어");
+        next(); 
+    })
+
+*/
+
+
+/*
+    - 2. 미들웨어에 주소를 추가하여 해당 주소로 접근한 경우만
+    실행되는 미들웨어를 선언할 수 있다.
+
+    ex)
+    이건 모든 요청이 아니라 /middle로
+    접근한 경우 실행된다.
+
+    app.use("/middle", (req, res, next) => {
+        console.log("middle 실행");
+        next(); 
+    })
+ */
+
+
+  
+/*
+    3. 미들웨어를 여러개 선언할 수도 있다.
+    app.use((req, res, next) => {
+        console.log("1. 미들웨어");
+        next(); 
+    }, (req, res, next) => {
+        console.log("2. 미들웨어");
+        next(); 
+    }, (req, res, next) => {
+        console.log("3. 미들웨어");
+        next(); 
+    }, )
+
+*/
+
+
+
+/*
+    4. 에러처리 미들웨어
+    - node는 single thread이기 때문에
+    에러처리가 중요하다.
+
+    - 모든 에러가 발생하면 에러처리 미들웨어가 실행된다.
+
+    - 에러 미들웨어는 매개변수 4개를 모두
+    작성해야 한다.(err, req, res, next)
+
+    - 미들웨어로 에러를 임의로 발생 시킬 수 있다.
+    해당 코드를 use(), get() 등에 넣어서 사용
+    (req, res, next) => {
+        throw new Error("에러났네");
+    }
+
+    // 에러처리 미들웨어
+    app.use((err, req, res, next) => {
+        console.error(err);
+        res.send("에러 났습니다. 문의하세요");
+    })
+
+*/
+
+
+
+
+
+
+/*
+    5. 404 에러 처리
+    라우터와 에러 미들웨어 사이에 선언하여 준다.
+    404 에러가 경로에서 제공되는게 없는 경우 발생하기 때문에
+    라우터에서 전부 거르고 그래도 걸러지지 않은 경우 
+    404에러 발생 대신 미들웨어 작성하여 처리한다.
+    app.use((req, res, next) => {
+        res.send("404 경로를 다시 입력해주세요~~~~!!!!");
+    })
+*/
+
+
+
+
+
+/*
+    6. 상태 제공
+    res.send(), res.sendFile() 등의 res.뒤에는
+    res.status(200)이 기본으로 선언된다.
+
+*/
+
+
+/*
+    7.try / catch를 사용한 에러처리
+    try{
+
+    } catch (error){
+        // next(error)를 하면 에러가 발생하여
+        // 작성한 에러 미들웨어가 실행된다.
+        next(error); 
+    }
+
+    app.use((req, res) =>{
+    try{
+        console.log(addValue);
+    } catch (error){
+        // next(error)를 하면 에러가 발생하여
+        // 작성한 에러 미들웨어가 실행된다.
+        next(error); 
+    }
+})
+
+*/
+
+
+
+/*
+    8. next('route);
+    - next('route);를 하게되면 다음 미들웨어가 아닌,
+    다음 라우터로 넘어간다.
+
+    - if문으로 분기처리하는데 사용할 수 있다.
+
+    ex) 
+    app.get("/", (req, res, next) => {
+        console.log("router - 1");
+        // next('route');
+        next();
+    }, (req, res) => {
+        console.log("router - 2");
+    })
+
+
+    app.get("/", (req, res) => {
+        console.log("router - 3");
+    })
+*/
+
+app.get("/", (req, res, next) => {
+    console.log("router - 1");
+    // next('route');
+    next();
+}, (req, res) => {
+    console.log("router - 2");
+})
+
+
+app.get("/", (req, res) => {
+    console.log("router - 3");
+})
+
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.send("에러 났습니다. 문의하세요");
+})
+
+// 포트 대기
+app.listen(app.get('port'), () => {
+    console.log('listening 3000 port');
+})
+
+
+
+
+
+
+
+
 
 
 
