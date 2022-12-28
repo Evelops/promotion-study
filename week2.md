@@ -1,219 +1,142 @@
-/*
-    MDN에서 object의 종류 확인하기
-
-    - js는 runtime에 동적으로 타입이 변경된다.
-
-    @ Class
-
-    1. Class
-    - object는 key와 value의 집합체이다.
-
-
-
-    @ object 선언방법
-    1-1 const obj = {name = "jjs"};
-
-    1-2 
-    class Obj{
-        
-        constructor(name){
-            this.name = name;
-        }
-
-    }
-
-    const obj = new Obj("jjs");
-
-
-    1-3 constructor function
-    function Person(name, age){
-        this.name = name;
-        this.age = age;
-    }
-
-    const person1 = new Person("jjs", 23);
-
-
-*/
-
-/*
-
-    2. Literal properties
-    - 속성의 추가 / 삭제를 동적으로 할 수 있다.
-
-    - 추가
-    const obj = {name = "jjs"};
-
-    obj.age = 20;
-
-
-    - 삭제
-    delete obj.age;
+"use strict";
+/* 
 
 */
 
 
-/*
-    3.Computed properties
+/* 
+    @@@ Array @@@
 
-    console.log(obj.name); // Literal properties
-    console.log(obj["name"]); //Computed properties
+    - array는 index로 접근이 가능하다. 
+      index는 0부터 시작한다.
 
+    @ object와 array의 차이
+    - object는 연관된 특징과 행동의 모음
+    - 자료구조는 비슷한 object의 모음 
 
-    - object의 속성을 불러오는 방식이다.
-    두 방식 모두 사용이 가능하다.
+    1. 배열의 선언
+    const arr1 = new Array();
+    const arr2 = [1, 2];
 
-    - Computed properties의 키는 string으로 
-    불러와야 한다.
-
-    - 는 속성명을 알고 있을 경우(보통의 경우)에
-    접근해서 사용하는 방식
-
-    - Computed properties는 속성명이 정해져 있지않은
-    경우 접근할 때 사용된다.
-    ex) 
-
-    const obj = new Object();
-    printValue(key){
-        console.log(obj[key]);
-    }
-
-*/
-
-
-/*
-    4. in operator
-    - in이라는 키워드로 
-    해당 키에 값이 있는지 확인할 수 있다.
-
-    - 결과는 true/false로 출력된다.
-    ex)
-
-    console.log('name' in obj);
-    console.log('age' in obj);
-    console.log('value' in obj);
-
-*/
-
-
-
-/*
-    5. 반복문(for ..in / for ..of)
-
-    5-1 for ..in
-
-    - object의 모든 key에 접근하기 위한 함수
-
-    for(key in person){
-        console.log(key);
-    }
-
-    결과:
-    person의 모든 key값이 출력된다.
+    2. 배열.foreach()
+    - foreach()문 첫번째 parameter로 callback함수를
+    넣을 수 있고 callback 함수의 매개변수로는 
+    value, index, array 객체를 return 받는다.
 
     ex)
-    class Obj{
-        constructor(name, age){
-            this.name = name;
-            this.age = age;
-            this.hasjob = true;
-        }
-    }
-
-    const person = new Obj("jjs", 28);
-
-    for(key in person){
-        console.log(key);
-    }
-
-
-    5-2 for ..of
-    - 배열에 담긴 모든 value값에 접근하기 위한 함수
-
-    const array = [1, 2, 5, 7];
-
-    for(value of array){
+    array1.foreach((value, index, array1) =>{
         console.log(value);
-    }
-
-    결과:
-    1 2 5 7
-*/
+    })
 
 
 
+    3. 배열의 add, delete
+    - 제일 뒤에 추가
+    array1.push("value1", "value2" ...);
+
+    - 제일 뒤의 값 삭제
+    array1.pop();
+
+    * shift()와 unshift()는 push(), pop()에 비해 매우 느리다.
+    shift 계열은 값을 앞에 추가/삭제하기 때문에 
+    index를 밀거나, 당겨줘야 하기 때문이다.
+    - 제일 앞에 추가
+    array1.unshift("value1", "value2" ...);
+
+    - 제일 뒤에 추가
+    array1.shift();
 
 
-/*
-    6. cloning
+    4. 지정된 index의 값을 삭제
+    array1.splice(시작할 index, 삭제할 개수);
 
-    6-1. 같은 object 참조
-    const user1 = {name: 'jjs', age: 20};
-    const user2 = user1;
+    let array = [1, 2, 3, 4, 5];
+    ex) array1.splice(1, 3);
+    : index 1 부터 3개 삭제
+    [1, 5]
+
+    ex) array1.splice(1);
+    : 해당 inext 번호 부터 전부 삭제
+    [1];
     
-    user2.name = "tom";
-    console.log(user1.name);
-    결과: tom
-
-    - const user2 = user1; 이것은
-    user1의 속성 값이 저장된 경로를 저장하기 때문에
-    user1과 user2 모두 user1에서 할당한 속성들의
-    실제 값의 경로가 저장된다.
-    그러므로
-    user2.name = "tom"; 여기서 name 속성의 값이
-    변경되었기 때문에 user1.name을 해도
-    변경된 tom이 출력된다.
-
-
-    6-2 object 복사
-
-    - 예전 방식
-    const user1 = {name: 'jjs', age: 20};
-    const user3 = {};
-
-    for(key in user){
-        user3[key] = user[key];
-    }
-
-    console.log(user3);
-
-    결과: {name: 'jjs', age: 20}
-
-
-    - 새로운 방식
-    Object.assign(저장하려는 object, 복사하려는 object);
     
+    5.배열 병합
+    let newArray = array1.concat(array2);
 
     ex) 
-    const user3 = {};
-
-    Object.assign(user3, user1);
-    console.log(user3);
-
-    결과: {name: 'jjs', age: 20}
-
-
-
-    - 응용 방식
-    Object.assign(빈 object, 저장될 obj1, 저장될 obj2, 저장될 obj3 ...)
-    이렇게 여러개를 입력하면 덮어쓰기 된다.
+    let array1 = [1, 2, 3];
+    let array2 = [4, 5];
+    let newArray = array1.concat(array2);
+    console.log(newArray);
     
+    결과: [1, 2, 3, 4, 5]
 
-    const fruit1 = {color: "red"};
-    const fruit2 = {color: "green", price: 1000};
-    const mixed = Object.assign({}, fruit1, fruit2);
 
-    console.log(mixed.color);
-    console.log(mixed.price);
 
-    결과: green, 1000
+    6.배열의 값 검색
+    indexOf(value1);
+    : value1이 몇번째 index에 있는지 리턴
+    값이 없는 경우 -1 리턴
+
+    6-2. includes(value1);
+    : value1이 배열에 있는지 확인(true/false);
 
 */
 
+//1. 배열의 선언
+const arr1 = new Array();
+const arr2 = [5, 2];
 
-const fruit1 = {color: "red"};
-    const fruit2 = {color: "green", price: 1000};
-    const mixed = Object.assign({}, fruit1, fruit2);
 
-    console.log(mixed.color);
-    console.log(mixed.price);
+// 배열과 반복문
+// for(let index of arr2){
+//     console.log(index);
+// }
+
+// 2. 배열.foreach()
+// arr2.forEach( (value, index) => {
+//     console.log(array[index]);
+// });
+
+// 3. 배열 add, delete
+
+// - 뒤에 추가
+arr2.push(6, 9);
+
+console.log("push: "+arr2);
+
+console.log("-----------------------------------------");
+// 뒤에 삭제
+arr2.pop();
+
+console.log("pop: "+arr2);
+
+// - 앞에 추가
+arr2.unshift("value1", "value2");
+
+console.log("unshift: "+arr2);
+
+// - 앞에 삭제
+arr2.shift();
+
+console.log("shift: "+arr2);
+
+arr2.splice(2, 1);
+
+console.log("splice: "+arr2);
+
+
+console.log("-----------------------------------------");
+let array1 = [1, 2, 3];
+let array2 = [4, 5];
+let newArray = array2.concat(array1);
+console.clear();
+console.log(newArray);
+console.log(newArray.indexOf(2));
+console.log(newArray.indexOf(8));
+console.log(newArray.includes(3));
+console.log(newArray.includes(8));
+
+
+console.clear();
+console.log(newArray);
