@@ -49,6 +49,7 @@
     <br>
     
     - Example 
+    
     ```js
     const asychronousCall = (input, time) => {
         setTimeout(input,time);
