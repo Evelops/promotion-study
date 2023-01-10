@@ -1,8 +1,11 @@
 ## callback 
 
+<br>
+
 > callback
 
 <br>
+
 
 - js에서 함수는 object라고 할 수 있다. 그렇기에 함수의 인자값으로 서로 다른 함수를 포함 시킬 수 있으며, 다른 함수에 의해서 리턴 될 수 있다. 
 - 위의 내용을 풀어서 설명하면 JS에서 특정 이벤트에 의해서 호출되어 지는 함수를 callback 함수라고 하며, 이러한 과정을 callback 이라고 한다. 
@@ -35,7 +38,7 @@ mainFunc();
 ```
 <br>
 
-> 콜백 내부 콜백 
+> callback-in-callback 
 
 - 특정 함수가 두개 있는 경우, 순차적으로 함수를 호출하기 위해서는 콜백 함수 내부에서 추가적으로 콜백함수를 부르는 경우가 있다. 
 
@@ -70,23 +73,6 @@ callFunc(4,()=>{
 ```
 <br>
 
-> 콜백지옥
-
-- 
-
-
-
-## promise
-
-
-
-
-
-
-
-
-
-
 ## async & sync
 
 <br>
@@ -95,6 +81,8 @@ callFunc(4,()=>{
  
 - sync 
     - 동기적으로 코드가 위에서 부터 아래로 실행되는 일반적인 경우.
+    - 자바스크립트의 경우 기본적으로 Synchronous. 
+    - hoisting 된 이후,JS 코드가 작성된 순서에 맞게 동기적으로 실행됨.  
 
 <br>
 
@@ -148,6 +136,92 @@ callFunc(4,()=>{
     ```
 
 <br>
+
+> 콜백지옥
+
+
+
+- example
+
+```js
+
+/**
+ * callback hell example sudo code
+ * 걍 저렇게 작성하면 가독성도 down 되고, 함수 내부에서 계속해서 콜백 함수를 호출 & 전달 하고 있기 때문에 비생산적.
+ * 에러 및 디버깅 어려움.
+ * 쓰레기 코드. 
+ * 간단한 코드 설명은 스터디 당일 요약 -> 발표.
+ * 
+*/
+class UserStorage {
+    // 유저의 정보와  
+    loginUser(id, pwd, onSuccess, onError){
+        setTimeout(()=>{
+            if(
+                (id == 'esy' && pwd =='1234') || 
+                (id == 'coder' && pwd =='12345')
+            ){
+                onSuccess(id); // 위 조건과 일치 할 경우, id 값을 호출하는 콜백 함수
+            }else {
+                onError(new Error('not found User'));
+            }
+        },2000)
+
+    }
+
+    getRoles(user, onSuccess, onError){
+        setTimeout(()=>{
+            if(user == 'esy'){
+                onSuccess({name:'esy', role:'admin'});
+            }else{
+                onError(new Error('can not access'));
+            }
+        },1000);
+    }
+}
+
+ 
+const userStorage = new UserStorage();
+
+const id = prompt('enter your id');
+const pwd = prompt('enter your pwd');
+
+userStorage.loginUser(
+    id,
+    pwd,
+    (user)=>{
+        userStorage.getRoles(
+            user,
+            userWithRole => {
+                console.log(`Name: ${userWithRole.name}, Role: ${userWithRole.role}`);
+            },
+            error => {
+                console.log(error);
+            }
+            );
+    },
+    (error)=>{
+        console.log(error)
+    });
+
+
+
+```
+
+
+
+## promise
+
+
+
+
+
+
+
+
+
+
+
 
 > async 함수 
 
