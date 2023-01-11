@@ -1,3 +1,4 @@
+// 화
 // Q1. make a string out of an array
 {
     // const fruits = ['apple', 'banana', 'orange'];
@@ -198,5 +199,72 @@
     console.log(result);
   }
 
+// 수
+/*
 
+@ HTTP 통신을 하기 위한 API
+- fetch() api
+- XHR
+
+
+@ XML
+- 마크업 언어
+- 데이터를 표현하기 위한 문서
+- 가독성이 좋지 않다.
+
+@ JSON
+- key-value 형식의 데이터 포맷
+- 경량
+- 직렬화하고 데이터 전속을 위해 사용
+- 대부분의 언어에서 사용이 가능하다.
+
+
+@ object to Json 방법
+- 함수는 제외된다.
+
+let json = JSON.stringify(true);
+console.log(json);
+
+json = JSON.stringify(['apple', 'banana']);
+console.log(json);
+
+const rabbit = {
+    name: 'tori',
+    color: 'white',
+    size: 'small',
+    jump: () =>{
+        console.log("jump");
+    }
+}
+json = JSON.stringify(rabbit);
+console.log(json);
+
+// JSON.stringify(json, property)를 하면
+// property에 해당하는 원하는 속성만 넣을 수 있다.
+json = JSON.stringify(rabbit, ["name"]);
+console.log(json);
+
+
+@ Json to Object
+JSON.parse()
+- object에 함수가 있는 경우 JSON으로 변환하게 되면
+  함수는 제외되기 때문에 다시 JSON.parse() 메소드로
+  Object로 변환하여도 함수는 포함되지 않는다.
+
+const rabbit = {
+    name: 'tori',
+    color: 'white',
+    size: 'small',
+    jump: () =>{
+        console.log("jump");
+    }
+}
+
+let json = JSON.stringify(rabbit);
+
+const obj = JSON.parse(json);
+
+console.log(obj);
+obj.jump();
+*/
   
