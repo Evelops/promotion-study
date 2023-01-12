@@ -209,9 +209,10 @@ userStorage.loginUser(
 
 - JS object 
 - 비동기적으로 실행될 때, 콜백 함수를 대신해서 사용.
+- 
 
 ```js 
-
+// promise의 기본 layer.
 let promise = new Promise((resolve,reject)=>{
 /**
  * executor => promise 객체에 전달되는 함수를 부를 때 말함(실행자, 실행함수라고 명칭.)
@@ -230,9 +231,21 @@ let promise = new Promise((resolve,reject)=>{
 
 
 
+```js
+// executor가 에러와 함께 작업을 거부하는 case
+    let promise = new Promise((resolve,reject)=>{
+        // 1초 뒤 reject 호출시, promise의 상태가 reject 로 변경. 
+        setTimeout(()=>reject(new Error("ERR!")),1000);
+    });
+```
 
+###  Summary
 
+<br> 
 
+- executor 시간이 걸리는 일을 수행. 
+- executor의 실행이 종료되면 resolve & reject 함수를 호출함과 동시에 프라미스 객체의 상태가 변화함.
+- resolve & reject 상태의 프라미스는 settled promise라고 불림. 
 
 
 
